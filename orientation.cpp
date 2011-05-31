@@ -13,7 +13,8 @@
 char const * const Orientation::id("contextkit.orientation");
 
 Orientation::Orientation(QSensor *sensor)
-    : QSensorBackend(sensor)
+    : QSensorBackend(sensor),
+      topEdgeProperty(NULL)
 {
     setReading<QOrientationReading>(&m_reading);
 }
@@ -48,6 +49,11 @@ void Orientation::updateSensor()
 
 void Orientation::start()
 {
+    if (topEdgeProperty)
+    {
+        return;
+    }
+
     topEdgeProperty = new ContextProperty("Screen.TopEdge",this);
     topEdgeProperty->subscribe();
     connect(topEdgeProperty,SIGNAL(valueChanged()),this,SLOT(updateSensor()));
@@ -55,5 +61,10 @@ void Orientation::start()
 
 void Orientation::stop()
 {
-    delete topEdgeProperty;
+    if (topEdgeProperty)
+    {
+        return;
+    }
+
+    topEdgeProperty->unsubscribe();
 }
