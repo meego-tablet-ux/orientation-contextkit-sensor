@@ -16,7 +16,7 @@ plugin.files += libqtsensors_orientation.so
 plugin.path += $$[QT_INSTALL_PLUGINS]/sensors
 INSTALLS += plugin
 
-VERSION = 0.0.2
+VERSION = 0.0.3
 PROJECT_NAME = orientation-contextkit-sensor
 
 dist.commands += rm -fR $${PROJECT_NAME}-$${VERSION} &&
